@@ -21,3 +21,7 @@ export async function validatePasswordLoginService({ email, password }) {
     if (!isValid) return false;
     return omit(user.toJSON(), "password");
 }
+
+export async function findUserService(query) {
+    return User.findOne(query).lean();
+}

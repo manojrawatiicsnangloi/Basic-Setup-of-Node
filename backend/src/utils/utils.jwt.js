@@ -4,7 +4,7 @@ const generateTokenByJwt = async (data, option = undefined) => {
     return jwt.sign(data, 'private_key', option);
 }
 
-const userDecode = async (token) => {
+const decodeTokenByJwt = async (token) => {
     try {
         const decode = jwt.verify(token);
         return {
@@ -21,4 +21,4 @@ const userDecode = async (token) => {
     }
 }
 
-export { generateTokenByJwt, userDecode };
+export { generateTokenByJwt, decodeTokenByJwt };
