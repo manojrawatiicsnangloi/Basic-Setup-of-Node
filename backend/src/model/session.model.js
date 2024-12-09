@@ -7,9 +7,11 @@ const SessionSchema = new mongoose.Schema({
     },
     valid: {
         type: Boolean,
-        required: true
+        default         : true
     }
-}, { timestamps });
+}, {
+    timestamps
+});
 
 const SessionModel = mongoose.model("Session", SessionSchema);
 

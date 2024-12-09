@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const userSignByJwt = async (data, option = undefined) => {
+const generateTokenByJwt = async (data, option = undefined) => {
     return jwt.sign(data, 'private_key', option);
 }
 
@@ -21,4 +21,4 @@ const userDecode = async (token) => {
     }
 }
 
-export { userSignByJwt, userDecode };
+export { generateTokenByJwt, userDecode };
