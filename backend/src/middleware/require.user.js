@@ -1,4 +1,4 @@
-const validateUser = (req, res) => {
+const requireUser = (req, res) => {
     try {
         if (req.user) return next();
         res.json({ "error": "Unauthorized User!" }).status(401);
@@ -7,4 +7,4 @@ const validateUser = (req, res) => {
     }
 }
 
-export default validateUser;
+export default requireUser;

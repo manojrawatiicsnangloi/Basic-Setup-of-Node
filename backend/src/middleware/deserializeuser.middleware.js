@@ -7,11 +7,11 @@ const deserializeUser = async (req, res, next) => {
     ""
   );
   if (!accessToken) return next();
-  const { 
+  const {
     decode,
     expired
   } = decodeTokenByJwt(accessToken);
-  
+
   if (decode) {
     req.user = decode;
     return next();
