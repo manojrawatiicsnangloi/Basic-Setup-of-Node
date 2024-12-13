@@ -5,7 +5,6 @@ const validateUser = (schema) => async (req, res, next) => {
             params: req.params,
             query: req.query
         });
-
         return next();
     } catch (error) {
         console.log(error);

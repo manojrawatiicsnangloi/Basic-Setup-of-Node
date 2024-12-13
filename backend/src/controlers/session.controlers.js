@@ -2,9 +2,9 @@
 
 
 import { get } from "lodash";
-import { createSessionService } from "../service/session.service";
+import { createSessionService, findSession, updateSessionService } from "../service/session.service";
 import { validatePasswordLoginService } from "../service/user.service";
-import { generateTokenByJwt } from "../utils/utils.jwt";
+import { decodeTokenByJwt, generateTokenByJwt } from "../utils/utils.jwt";
 
 
 // User Login Handler
@@ -29,6 +29,35 @@ export const createUserSessionHandler = async (req, res) => {
     }
 }
 
+export const getSessionHandler = async (req, res) => {
+    try {
+        const accessToken = get(req, "headers.authorization", "").replace(
+            /^Bearer\s/,
+            ""
+          );
+        const { decode, expired } = decodeTokenByJwt(accessToken);
+        if (decode && !expired){
+            const session = await findSession({ user : decode._id });
+            return res.json(session).status(200);
+        }
+        else{
+            return res.json({"error" : "Invalid Session"}).status(400);
+        }
+    } catch (error) {
+        return res.json({error : `${error}`}).status(500);
+    }
+}
+
+
+export const updateSessionHandler = async (req, res)=>{
+    try {
+        const session = await updateSessionService({ valid : false });
+        return res.json({session});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // ReIssueAccessToken Controlers
 export const reIssueAccessTokenSessionHandler = async (req, res) => {
     try {
@@ -45,3 +74,5 @@ export const reIssueAccessTokenSessionHandler = async (req, res) => {
         res.json({ "error": `${error}` });
     }
 }
+
+
