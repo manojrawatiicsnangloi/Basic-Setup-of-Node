@@ -1,12 +1,15 @@
 import express from "express";
 import connectionToDatabase from "./db/connection.js";
 import deserializeUser from "./middleware/deserializeuser.middleware.js";
+import cors from "cors";
 
 const app = express();
 
+app.use(cors({
+    origin : "*"
+}));
 
 app.use(deserializeUser);
-
 
 app.listen(3000, async () => {
     try {
