@@ -1,21 +1,22 @@
-
-
-
 import { get } from "lodash";
-import { createSessionService, findSession, updateSessionService } from "../service/session.service";
+import { createSessionService, findSession, reIssueAccessToken, updateSessionService } from "../service/session.service";
 import { validatePasswordLoginService } from "../service/user.service";
 import { decodeTokenByJwt, generateTokenByJwt } from "../utils/utils.jwt";
+
 
 
 // User Login Handler
 export const createUserSessionHandler = async (req, res) => {
     try {
         const user = await validatePasswordLoginService(req.body)
+
         if (!user) {
-            return res.json({ "error": "Invalid Info" });
+            return res.json({ "error": "Invalid Info" }).status(400);
         }
 
-        const session = await createSessionService(user._id, req.get('user-agent' || ""));
+        const existSession = await findSession({user : user._id});
+         
+        const session = existSession.valid ? existSession : await  (user._id, req.get('user-agent' || ""));
 
         const accessToken = generateTokenByJwt({ ...user, session: session._id }, "accessTokenPrivateKey", {
             expreIn: 5 * 60
@@ -64,10 +65,10 @@ export const reIssueAccessTokenSessionHandler = async (req, res) => {
         const refrehToken = get(req, "headers.x-refresh");
 
         if (!refrehToken) {
-            return res.json({ "error": "Referesh Token is" }).status(401);
+            return res.json({ "error": "Unauthorize user" }).status(401);
         }
         else {
-            const accessToken = await reIssueAccessTokenSessionHandler(refrehToken);
+            const accessToken = await reIssueAccessToken(refrehToken);
             res.json({ accessToken }).status(200);
         }
     } catch (error) {

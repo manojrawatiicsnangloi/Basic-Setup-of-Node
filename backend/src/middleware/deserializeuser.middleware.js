@@ -16,6 +16,7 @@ const deserializeUser = async (req, res, next) => {
     req.user = decode;
     return next();
   }
+  next();
 }
 
 export default deserializeUser;
