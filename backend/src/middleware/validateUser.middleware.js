@@ -7,8 +7,9 @@ const validateUser = (schema) => async (req, res, next) => {
         });
         return next();
     } catch (error) {
+        console.log('------------------------------------Hii_______________-------------------');
         console.log(error);
-        res.json(error.errors).status(400);
+        res.json({"error" : `${error}`}).status(400);
     }
 }
 

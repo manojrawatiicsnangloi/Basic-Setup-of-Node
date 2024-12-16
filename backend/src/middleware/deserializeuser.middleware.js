@@ -1,5 +1,8 @@
-import { get } from "lodash";
+import lodash from "lodash";
 import { decodeTokenByJwt } from "../utils/utils.jwt.js";
+
+
+const { get } = lodash;
 
 const deserializeUser = async (req, res, next) => {
   const accessToken = get(req, "headers.authorization", "").replace(

@@ -1,22 +1,19 @@
-import { get } from "lodash";
-import { createSessionService, findSession, reIssueAccessToken, updateSessionService } from "../service/session.service";
-import { validatePasswordLoginService } from "../service/user.service";
-import { decodeTokenByJwt, generateTokenByJwt } from "../utils/utils.jwt";
+import lodash from "lodash";
+import { createSessionService, findSession, reIssueAccessToken, updateSessionService } from "../service/session.service.js";
+import { validatePasswordLoginService } from "../service/user.service.js";
+import { decodeTokenByJwt, generateTokenByJwt } from "../utils/utils.jwt.js";
 
-
-
+const { get } = lodash;
 // User Login Handler
 export const createUserSessionHandler = async (req, res) => {
     try {
         const user = await validatePasswordLoginService(req.body)
-
         if (!user) {
             return res.json({ "error": "Invalid Info" }).status(400);
         }
+        const existSession = await findSession({ user: user._id });
 
-        const existSession = await findSession({user : user._id});
-         
-        const session = existSession.valid ? existSession : await  (user._id, req.get('user-agent' || ""));
+        const session = existSession.valid ? existSession : await (user._id, req.get('user-agent' || ""));
 
         const accessToken = generateTokenByJwt({ ...user, session: session._id }, "accessTokenPrivateKey", {
             expreIn: 5 * 60
@@ -35,25 +32,25 @@ export const getSessionHandler = async (req, res) => {
         const accessToken = get(req, "headers.authorization", "").replace(
             /^Bearer\s/,
             ""
-          );
+        );
         const { decode, expired } = decodeTokenByJwt(accessToken);
-        if (decode && !expired){
-            const session = await findSession({ user : decode._id });
+        if (decode && !expired) {
+            const session = await findSession({ user: decode._id });
             return res.json(session).status(200);
         }
-        else{
-            return res.json({"error" : "Invalid Session"}).status(400);
+        else {
+            return res.json({ "error": "Invalid Session" }).status(400);
         }
     } catch (error) {
-        return res.json({error : `${error}`}).status(500);
+        return res.json({ error: `${error}` }).status(500);
     }
 }
 
 
-export const updateSessionHandler = async (req, res)=>{
+export const updateSessionHandler = async (req, res) => {
     try {
-        const session = await updateSessionService({ valid : false });
-        return res.json({session});
+        const session = await updateSessionService({ valid: false });
+        return res.json({ session });
     } catch (error) {
         console.log(error);
     }
