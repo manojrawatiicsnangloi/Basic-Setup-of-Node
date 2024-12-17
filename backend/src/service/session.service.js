@@ -3,7 +3,6 @@ import { decodeTokenByJwt, generateTokenByJwt } from "../utils/utils.jwt.js";
 import lodash from "lodash";
 import { findUserService } from "./user.service.js";
 
-
 const { get } = lodash;
 
 export const createSessionService = async (userId) => {

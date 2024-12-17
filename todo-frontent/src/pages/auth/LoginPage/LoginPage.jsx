@@ -15,7 +15,7 @@ const MyLogin = () => {
     const loginFunc = async (e) => {
         
         e.preventDefault();
-        const data = await postRequest('login', {email, password})
+        const data = await postRequest('login', {email, password});
         console.log(data);
        
     }

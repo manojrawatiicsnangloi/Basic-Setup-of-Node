@@ -1,15 +1,17 @@
 const validateUser = (schema) => async (req, res, next) => {
-    try {        
-        schema.validate({
+    try {
+        await schema.validate({
             body: req.body,
             params: req.params,
             query: req.query
-        });
+        }, { abortEarly: false });
+
         return next();
     } catch (error) {
-        console.log('------------------------------------Hii_______________-------------------');
-        console.log(error);
-        res.json({"error" : `${error}`}).status(400);
+        res.status(400).json({
+            error: 'Validation Error',
+            details: error.errors || 'Some Error Occurred'
+        });
     }
 }
 

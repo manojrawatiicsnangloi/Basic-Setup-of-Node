@@ -17,7 +17,8 @@ export const createUserSessionHandler = async (req, res) => {
 
         const accessToken = generateTokenByJwt({ ...user, session: session._id }, "accessTokenPrivateKey", {
             expreIn: 5 * 60
-        })
+        });
+
         const refrehToken = generateTokenByJwt(session, {
             expreIn: 365 * 24 * 60 * 60
         });
