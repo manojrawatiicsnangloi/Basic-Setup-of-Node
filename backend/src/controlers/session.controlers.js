@@ -12,9 +12,7 @@ export const createUserSessionHandler = async (req, res) => {
             return res.json({ "error": "Invalid Info" }).status(400);
         }
         const existSession = await findSession({ user: user._id });
-
         const session = existSession.valid ? existSession : await (user._id, req.get('user-agent' || ""));
-
         const accessToken = generateTokenByJwt({ ...user, session: session._id }, "accessTokenPrivateKey", {
             expreIn: 5 * 60
         });
@@ -24,7 +22,8 @@ export const createUserSessionHandler = async (req, res) => {
         });
         return res.json({ accessToken, refrehToken });
     } catch (error) {
-        res.json({ "error": error?.errors });
+        console.log(error);
+        res.json({ "error": error }).status(404);
     }
 }
 

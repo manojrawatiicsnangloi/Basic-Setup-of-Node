@@ -19,6 +19,7 @@ export async function createUserService(user_data) {
 export async function validatePasswordLoginService({ email, password }) {
     const user = await UserModel.find({ email: email });
     if (!user) return false;
+    console.log(user);
     const isValid = await user.comparePassword(password);
     if (!isValid) return false;
     return omit(user.toJSON(), "password");

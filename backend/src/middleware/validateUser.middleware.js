@@ -1,5 +1,6 @@
 const validateUser = (schema) => async (req, res, next) => {
     try {
+        console.log(req.body);
         await schema.validate({
             body: req.body,
             params: req.params,

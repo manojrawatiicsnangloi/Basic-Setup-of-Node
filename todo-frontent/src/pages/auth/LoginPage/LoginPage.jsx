@@ -16,7 +16,6 @@ const MyLogin = () => {
         
         e.preventDefault();
         const data = await postRequest('login', {email, password});
-        console.log(data);
        
     }
 
@@ -24,7 +23,7 @@ const MyLogin = () => {
     }, []);
 
     return (
-        <section className="gradient-form h-[100vh] bg-neutral-200  dark:bg-neutral-700">
+        <section className="gradient-form h-[100vh] bg-neutral-200">
             <div className=" h-full p-10">
                 <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200 md:w-[55%] mx-auto">
                     <div className="w-full">
