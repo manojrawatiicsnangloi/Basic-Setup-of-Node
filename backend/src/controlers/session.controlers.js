@@ -8,14 +8,21 @@ const { get } = lodash;
 export const createUserSessionHandler = async (req, res) => {
     try {
         const user = await validatePasswordLoginService(req.body)
+        
         if (!user) {
             return res.json({ "error": "Invalid Info" }).status(400);
         }
+        console.log("hii")
         const existSession = await findSession({ user: user._id });
-        const session = existSession.valid ? existSession : await (user._id, req.get('user-agent' || ""));
+        console.log("hii")
+        
+        const session = existSession.valid ? existSession : await createSessionService(user._id, req.get('user-agent' || ""));
+        console.log("hii")
+        
         const accessToken = generateTokenByJwt({ ...user, session: session._id }, "accessTokenPrivateKey", {
             expreIn: 5 * 60
         });
+        console.log("hii");
 
         const refrehToken = generateTokenByJwt(session, {
             expreIn: 365 * 24 * 60 * 60

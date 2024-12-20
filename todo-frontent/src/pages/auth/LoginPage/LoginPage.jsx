@@ -16,7 +16,6 @@ const MyLogin = () => {
         
         e.preventDefault();
         const data = await postRequest('login', {email, password});
-       
     }
 
     useEffect(() => {

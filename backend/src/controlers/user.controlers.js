@@ -3,10 +3,10 @@ import { createUserService } from "../service/user.service.js";
 const userRegisterControler = async (req, res) => {
     try {
         const user = await createUserService(req.body);
-        
-        return res.json(user.json());
+        return res.json({"message" : "Data Send Successfully"});
     } catch (error) {
-        res.json({ "error": "Internal Server Error" }).status(500);
+        console.log(error)
+        res.json({error : `${error}`}).status(500);
     }
 }
 
