@@ -19,14 +19,14 @@ export async function createUserService(user_data) {
 export async function validatePasswordLoginService({ email, password }) {
     console.log(email);
 
-    const user = await UserModel.findOne({ email }); 
-    
+    const user = await UserModel.findOne({ email });
+
     if (!user) return false;
     const isValid = await user.comparePassword(password);
-    
+
     if (!isValid) return false;
     return user.toJSON ? omit(user.toJSON(), "password") : user;
-  }
+}
 
 export async function findUserService(query) {
     return User.findOne(query).lean();

@@ -4,7 +4,6 @@ import { validatePasswordLoginService } from "../service/user.service.js";
 import { decodeTokenByJwt, generateTokenByJwt } from "../utils/utils.jwt.js";
 
 const { get } = lodash;
-// User Login Handler
 export const createUserSessionHandler = async (req, res) => {
     try {
         const user = await validatePasswordLoginService(req.body);
@@ -13,18 +12,17 @@ export const createUserSessionHandler = async (req, res) => {
         }
         const existSession = await findSession({ user: user._id });
         const session = existSession.valid ? existSession : await createSessionService(user._id, req.get('user-agent' || ""));
-        const accessToken = generateTokenByJwt({ ...user, session: session._id }, "accessTokenPrivateKey", {
-            expreIn: 5 * 60
+        const accessToken = await generateTokenByJwt({ ...user, session: session._id }, {
+            expiresIn: 5 * 60
         });
-        
-        const refrehToken = generateTokenByJwt(session, {
-            expreIn: 365 * 24 * 60 * 60
+        console.log(accessToken)
+        const refrehToken = await generateTokenByJwt(session, {
+            expiresIn: 365 * 24 * 60 * 60
         });
-
         return res.json({ accessToken, refrehToken });
     } catch (error) {
-        console.log(error);
-        res.json({ "error": error }).status(404);
+        // console.log(error);
+        res.json({ "error": `${error}` }).status(404);
     }
 }
 

@@ -1,7 +1,13 @@
 import jwt from "jsonwebtoken";
 
 const generateTokenByJwt = async (data, option = undefined) => {
-    return jwt.sign(data, 'private_key', option);
+    try{
+        return jwt.sign(data, 'private_key', option);
+    }
+    catch (error){
+        console.log(option);
+        throw new Error("This is new Error");
+    }
 }
 
 const decodeTokenByJwt = async (token) => {
