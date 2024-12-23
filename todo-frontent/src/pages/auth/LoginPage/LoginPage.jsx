@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-// import PersonIcon from "@mui/icons-material/Person";
-// import LockIcon from "@mui/icons-material/Lock";
-// import { DataContext } from "../context";
 import lotus from "./lotus.webp";
-import EmailIc from "../../../imgIc/emailIc";
-import LockIc from "../../../imgIc/LockIc";
+import { MdEmail } from "react-icons/md";
+import { FaLock } from "react-icons/fa";
 import { postRequest } from "../../../SelfModule/api/Apis";
+import { Navigate, NavLink } from "react-router-dom";
 
 const MyLogin = () => {
 
@@ -13,9 +11,9 @@ const MyLogin = () => {
     const [password, setPassword] = useState();
 
     const loginFunc = async (e) => {
-        
+
         e.preventDefault();
-        const data = await postRequest('login', {email, password});
+        const data = await postRequest('login', { email, password });
     }
 
     useEffect(() => {
@@ -53,8 +51,8 @@ const MyLogin = () => {
                                                 placeholder="Enter your Email"
                                                 onChange={(e) => setEmail(e.target.value)}
                                             />
-                                            <span className="absolute top-[12px] left-[10px] border border-r">
-                                                <EmailIc />
+                                            <span className="absolute top-[8px] left-[8px] ">
+                                                <MdEmail size={25} />
                                             </span>
                                         </div>
                                         {/* Password input */}
@@ -64,16 +62,17 @@ const MyLogin = () => {
                                                 name="password"
                                                 required
                                                 onChange={(e) => setPassword(e.target.value)}
-                                                className="border border-gray-300 outline-none peer  block min-h-[auto] w-full pl-9 bg-transparent py-[0.32rem] leading-[1.6] transition-all duration-200 ease-linear focus:border-orange-600  focus:border rounded"
+                                                className="border border-gray-300 outline-none peer 
+                                                 block min-h-[auto] w-full pl-9 bg-transparent py-[0.32rem] leading-[1.6] transition-all duration-200 ease-linear focus:border-orange-600  focus:border rounded"
                                                 id="exampleFormControlInput11"
                                                 placeholder="Enter Your Password"
                                             />
 
                                             <span className="absolute top-[7px] left-[8px]">
-                                                <LockIc />
+                                                <FaLock size={21} />
                                             </span>
                                         </div>
-                                        <div className="mb-12 pb-1 pt-1 text-center">
+                                        <div className=" pb-1 pt-1 text-center">
                                             <button
                                                 className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
                                                 type="submit"
@@ -86,7 +85,46 @@ const MyLogin = () => {
                                                 Submit
                                             </button>
                                         </div>
+
+                                        <div className=" pb-1 pt-1 text-center">
+                                            <button
+                                                // className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                                                className='text-blue-500 underline'
+                                                type="button"
+                                                data-te-ripple-init
+                                                data-te-ripple-color="light"
+                                                style={{
+                                                    // background: "black",
+                                                }}
+                                            >
+                                                {"Forgot Password ?"}
+                                            </button>
+                                        </div>
                                     </form>
+                                    <hr />
+                                    <div className="mt-4 pb-1 pt-1 text-center">
+                                        <button
+                                            // className={`mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold mt-5 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]`}
+                                            type="button"
+                                            data-te-ripple-init
+                                            data-te-ripple-color="light"
+                                            style={{
+                                                // background: "black",
+                                            }}
+
+                                        >
+                                            <span>Don't have an account?</span>
+
+                                                 <button
+                                                
+                                                className='text-blue-500 underline'>
+                                                    
+                                            <NavLink to={'/register'}>
+                                                    SignUp
+                                                    </NavLink>
+                                                    </button>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

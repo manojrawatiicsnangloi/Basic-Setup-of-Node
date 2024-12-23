@@ -13,9 +13,7 @@ app.use(cors({
     origin: "*"
 }));
 
-
 app.use(deserializeUser);
-
 
 app.listen(3000, async () => {
     try {

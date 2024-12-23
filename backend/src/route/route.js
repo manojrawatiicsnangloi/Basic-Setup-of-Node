@@ -8,6 +8,7 @@ import { userLoginSchema, userRegisterSchema } from "../schema/user.schema.js";
 const routeFunc = (app)=>{
     app.post('/login', validateUser(userLoginSchema), createUserSessionHandler);
     app.post('/register', validateUser(userRegisterSchema),  userRegisterControler);
+    app.post('', );
     app.get('/session', requireUser, getSessionHandler);
     app.delete("/logout",requireUser, updateSessionHandler);
 }
